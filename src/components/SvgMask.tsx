@@ -185,7 +185,7 @@ export class SvgMask extends Component<Props, State> {
       <Wrapper
         style={this.props.style}
         onLayout={this.handleLayout}
-        pointerEvents='none'
+        pointerEvents='auto'
         onPress={dismissOnPress ? stop : undefined}
       >
         <Svg
