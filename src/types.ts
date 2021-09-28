@@ -26,7 +26,6 @@ export interface IStep {
   borderRadiusObject?: BorderRadiusObject
   tourCategory?: string
   starter?: boolean
-  forceVerticalPosition?: 'top' | 'bottom'
 }
 export interface StepObject {
   [key: string]: IStep
