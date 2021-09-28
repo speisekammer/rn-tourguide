@@ -13,20 +13,16 @@ import {
   ValueXY,
 } from './types'
 
-export const getFirstStep = (category: string, steps: Steps): IStep | null =>
+export const getFirstStep = (steps: Steps): IStep | null =>
   steps &&
-  Object.values(steps).filter((_step) => {
-    return category === _step.tourCategory;
-  }).reduce(
+  Object.values(steps).reduce(
     (a: IStep | null, b) => (!a || a.order > b.order ? b : a),
     null,
   )
 
-export const getLastStep = (category: string, steps: Steps): IStep | null =>
+export const getLastStep = (steps: Steps): IStep | null =>
   steps &&
-  Object.values(steps).filter((_step) => {
-    return category === _step.tourCategory;
-  }).reduce(
+  Object.values(steps).reduce(
     (a: IStep | null, b) => (!a || a.order < b.order ? b : a),
     null,
   )
@@ -37,9 +33,7 @@ export const getStepNumber = (steps: Steps, step?: IStep): number | undefined =>
 
 export const getPrevStep = (steps: Steps, step?: IStep): IStep | null =>
   Object.values(steps)
-    .filter((_step) => {
-        return _step.order > step!.order && step!.tourCategory === _step.tourCategory;
-    })
+    .filter((_step) => _step.order < step!.order)
     .reduce((a: IStep | null, b) => (!a || a.order < b.order ? b : a), null)
 
 export const getNextStep = (
@@ -47,9 +41,7 @@ export const getNextStep = (
   step?: IStep,
 ): IStep | null | undefined =>
   Object.values(steps)
-    .filter((_step) => {
-      return _step.order > step!.order && step!.tourCategory === _step.tourCategory;
-    })
+    .filter((_step) => _step.order > step!.order)
     .reduce((a: IStep | null, b) => (!a || a.order > b.order ? b : a), null) ||
   step
 

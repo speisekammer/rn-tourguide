@@ -31,8 +31,6 @@ export interface TourGuideProviderProps {
   animationDuration?: number
   children: React.ReactNode
   dismissOnPress: boolean
-  starter?: boolean
-  tourCategory?: string
 }
 
 export const TourGuideProvider = ({
@@ -47,8 +45,8 @@ export const TourGuideProvider = ({
   maskOffset,
   borderRadius,
   verticalOffset,
+  startAtMount = false,
   dismissOnPress = false,
-  starter
 }: TourGuideProviderProps) => {
   const [visible, setVisible] = useState<boolean | undefined>(undefined)
   const [currentStep, updateCurrentStep] = useState<IStep | undefined>()
@@ -76,7 +74,12 @@ export const TourGuideProvider = ({
 
   useEffect(() => {
     if (mounted) {
-      if (Object.entries(steps).length <= 0) {
+      if (Object.entries(steps).length > 0) {
+        setCanStart(true)
+        if (startAtMount) {
+          start()
+        }
+      } else {
         setCanStart(false)
       }
     }
@@ -110,15 +113,15 @@ export const TourGuideProvider = ({
   const getPrevStep = (step: IStep | undefined = currentStep) =>
     utils.getPrevStep(steps!, step)
 
-  const getFirstStep = (tourCategory: string) => utils.getFirstStep(tourCategory, steps!)
+  const getFirstStep = () => utils.getFirstStep(steps!)
 
-  const getLastStep = (tourCategory: string) => utils.getLastStep(tourCategory, steps!)
+  const getLastStep = () => utils.getLastStep(steps!)
 
-  const isFirstStep = useMemo(() => currentStep === getFirstStep(currentStep?.tourCategory as string), [
+  const isFirstStep = useMemo(() => currentStep === getFirstStep(), [
     currentStep,
   ])
 
-  const isLastStep = useMemo(() => currentStep === getLastStep(currentStep?.tourCategory as string), [currentStep])
+  const isLastStep = useMemo(() => currentStep === getLastStep(), [currentStep])
 
   const next = () => setCurrentStep(getNextStep()!)
 
@@ -136,9 +139,6 @@ export const TourGuideProvider = ({
         [step.name]: step,
       }
     })
-    if (step.starter) {            
-      setCanStart(true);
-    }
   }
 
   const unregisterStep = (stepName: string) => {
@@ -157,7 +157,7 @@ export const TourGuideProvider = ({
   const start = async (fromStep?: number) => {
     const currentStep = fromStep
       ? (steps as StepObject)[fromStep]
-      : getFirstStep('')
+      : getFirstStep()
 
     if (startTries.current > MAX_START_TRIES) {
       startTries.current = 0
@@ -207,7 +207,6 @@ export const TourGuideProvider = ({
             maskOffset,
             borderRadius,
             dismissOnPress,
-            starter
           }}
         />
       </TourGuideContext.Provider>
