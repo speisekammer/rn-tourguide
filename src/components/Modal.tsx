@@ -34,6 +34,7 @@ export interface ModalProps {
   labels: Labels
   dismissOnPress: boolean
   easing(value: number): number
+  forceVerticalPosition?: 'top' | 'bottom'
   stop(): void
   next(): void
   prev(): void
@@ -152,8 +153,7 @@ export class Modal extends React.Component<ModalProps, State> {
     const relativeToTop = center.y
     const relativeToBottom = Math.abs(center.y - layout.height!)
     const relativeToRight = Math.abs(center.x - layout.width!)
-
-    const verticalPosition = relativeToBottom > relativeToTop ? 'bottom' : 'top'
+    const verticalPosition = this.props.forceVerticalPosition || (relativeToBottom > relativeToTop ? 'bottom' : 'top')
     const horizontalPosition =
       relativeToLeft > relativeToRight ? 'left' : 'right'
 

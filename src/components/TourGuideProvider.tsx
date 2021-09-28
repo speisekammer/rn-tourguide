@@ -33,6 +33,7 @@ export interface TourGuideProviderProps {
   dismissOnPress: boolean
   starter?: boolean
   tourCategory?: string
+  forceVerticalPosition?: 'top' | 'bottom'
 }
 
 export const TourGuideProvider = ({
@@ -48,7 +49,8 @@ export const TourGuideProvider = ({
   borderRadius,
   verticalOffset,
   dismissOnPress = false,
-  starter
+  starter,
+  forceVerticalPosition
 }: TourGuideProviderProps) => {
   const [visible, setVisible] = useState<boolean | undefined>(undefined)
   const [currentStep, updateCurrentStep] = useState<IStep | undefined>()
@@ -207,7 +209,8 @@ export const TourGuideProvider = ({
             maskOffset,
             borderRadius,
             dismissOnPress,
-            starter
+            starter,
+            forceVerticalPosition
           }}
         />
       </TourGuideContext.Provider>

@@ -20,6 +20,7 @@ export interface TourGuideZoneByPositionProps {
   text?: string
   starter?: boolean
   tourCategory?: string
+  forceVerticalPosition?: 'top' | 'bottom'
 }
 
 export const TourGuideZoneByPosition = ({
@@ -38,7 +39,8 @@ export const TourGuideZoneByPosition = ({
   borderRadiusObject,
   text,
   starter,
-  tourCategory
+  tourCategory,
+  forceVerticalPosition
 }: TourGuideZoneByPositionProps) => {
   if (!isTourGuide) {
     return null
@@ -59,7 +61,8 @@ export const TourGuideZoneByPosition = ({
           borderRadiusObject,
           text,
           starter,
-          tourCategory
+          tourCategory,
+          forceVerticalPosition
         }}
         style={{
           position: 'absolute',

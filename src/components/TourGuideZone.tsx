@@ -18,6 +18,7 @@ export interface TourGuideZoneProps {
   borderRadiusObject?: BorderRadiusObject
   starter?: boolean
   tourCategory?: string
+  forceVerticalPosition?: 'top' | 'bottom'
 }
 
 export const TourGuideZone = ({
@@ -33,7 +34,8 @@ export const TourGuideZone = ({
   tooltipBottomOffset,
   borderRadiusObject,
   starter,
-  tourCategory
+  tourCategory,
+  forceVerticalPosition
 }: TourGuideZoneProps) => {
   if (!isTourGuide) {
     return <>{children}</>
@@ -52,7 +54,8 @@ export const TourGuideZone = ({
         tooltipBottomOffset,
         borderRadiusObject,
         starter,
-        tourCategory
+        tourCategory,
+        forceVerticalPosition
       }}
     >
       <Wrapper {...{ style }}>{children}</Wrapper>
